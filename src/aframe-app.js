@@ -100,9 +100,9 @@ const SKINTONE = '#C9C9C9';
 const personHTML = `
         <a-entity id="person" position="0 0 -4.8w">
             <a-entity id="head-group" position="0 2.4 0">
-                <a-plane id="head" position="-0.1 0.3 0" width="2" height="1.8" src="/grayscale/head.png" material="side: double; transparent: true"></a-circle>
+                <a-plane id="head" position="-0.1 0.3 0" width="2" height="1.8" src="grayscale/head.png" material="side: double; transparent: true"></a-circle>
                 <a-plane id="eyes" position="0.08 -0.1 0.01" width="1" height="0.3" src="#eyes" image-animator="src1: #eyes; src2: #eyes-blink; interval: 1000" material="side: double"></a-plane>
-                <a-plane id="mouth" position="0.04 -0.54 0.01" width="0.4" height="0.2" src="/grayscale/lips.jpg"  material="side: double"></a-plane>
+                <a-plane id="mouth" position="0.04 -0.54 0.01" width="0.4" height="0.2" src="grayscale/lips.jpg"  material="side: double"></a-plane>
             </a-entity>
             <a-entity id="body-group" position="0 1.2 0">
                 <a-plane id="body" position="0 0.1 0" width="0.7" height="1" color="#aaaaaa" material="side: double"></a-plane>
@@ -123,8 +123,8 @@ const personHTML = `
 app.innerHTML = `
         <a-scene>
             <a-assets>
-                <img id="eyes" src="/grayscale/eyes.png">
-                <img id="eyes-blink" src="/grayscale/eyes-blink.jpg">                
+                <img id="eyes" src="grayscale/eyes.png">
+                <img id="eyes-blink" src="grayscale/eyes-blink.jpg">                
             </a-assets>
                 
 
@@ -139,7 +139,7 @@ app.innerHTML = `
                 
                                     <!-- Dashed rectangle using a repeating dash image as border -->
                                     <a-assets>
-                                        <img id="dash-img" src="/dash.png">
+                                        <img id="dash-img" src="dash.png">
                                     </a-assets>
 
                                     <a-plane position="0 2 -3" width="2" height=".04" src="#dash-img" material="transparent: true; side: double; repeat: 8 2"></a-plane>
