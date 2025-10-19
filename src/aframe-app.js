@@ -66,6 +66,24 @@ AFRAME.registerComponent('threejs-text-plane', {
 import 'aframe';
 import 'aframe-orbit-controls';
 
+
+// Reusable dashed border plane component
+AFRAME.registerComponent('dashed-border-plane', {
+    schema: {
+        width: { type: 'number', default: 2 }
+    },
+    init: function () {
+        // Set height to fixed value (e.g., 0.04)
+        // const height = 0.04;
+        const aspectRatio = 800 / 32; // Assuming dash image is 512x32
+        const height = this.data.width / aspectRatio;
+        this.el.setAttribute('width', this.data.width);
+        this.el.setAttribute('height', height);
+        this.el.setAttribute('src', '#dash-img');
+        this.el.setAttribute('material', 'transparent: true; side: double; repeat: ' + (this.data.width * 5) + ' 2');
+    }
+});
+
 // Register a custom component to animate the face image
 AFRAME.registerComponent('image-animator', {
     schema: {
@@ -133,17 +151,17 @@ app.innerHTML = `
                 ${personHTML}
 
                 <!-- Vector dashed rectangle using custom component -->
-                
-                                    <!-- Dashed rectangle using a repeating dash image as border -->
-                                    <a-assets>
-                                        <img id="dash-img" src="dash.png">
-                                    </a-assets>
+    
+                <!-- Dashed rectangle using a repeating dash image as border -->
 
-                                    <a-plane position="0 2 -3" width="0.5" height=".01" src="#dash-img" material="transparent: true; side: double; repeat: 8 2"></a-plane>
+                    <a-assets>
+                        <img id="dash-img" src="dash.png">
+                    </a-assets>
+                    <a-plane position="0 2 -3" rotation="0 0 10" dashed-border-plane="width: 1"></a-plane>
 
-                                    <!-- Three.js text plane as A-Frame entity -->
-                                    <a-entity position="1.5 2.5 -4" threejs-text-plane="text: Hello from Three.js!; font: bold 48px sans-serif; color: #222; bgcolor: rgba(255,255,255,0.95)"></a-entity>
-                    
+                    <!-- Three.js text plane as A-Frame entity -->
+                    <a-entity position="1.5 2.5 -4" threejs-text-plane="text: Hello from Three.js!; font: bold 48px sans-serif; color: #222; bgcolor: rgba(255,255,255,0.95)"></a-entity>
+        
 
                 
                 <a-sky color="#ECECEC"></a-sky>
