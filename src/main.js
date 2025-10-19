@@ -1,3 +1,41 @@
+// Utility: Create a canvas texture with styled text
+function createTextTexture(text, options = {}) {
+    const {
+        font = '48px Dogica, monospace',
+        color = '#222',
+        bgColor = 'rgba(255,255,255,0.9)',
+        padding = 32,
+        width = 512,
+        height = 128,
+        align = 'center'
+    } = options;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = font;
+    ctx.fillStyle = color;
+    ctx.textAlign = align;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, width / 2, height / 2);
+    return new THREE.CanvasTexture(canvas);
+}
+
+// Sample usage: Add a text plane to the scene
+function addTextPlaneToScene(scene, text, opts = {}) {
+    const texture = createTextTexture(text, opts);
+    const geometry = new THREE.PlaneGeometry(4, 1);
+    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, 2, -4);
+    scene.add(mesh);
+    return mesh;
+}
+
+// Example: Add styled text to your Three.js scene after setup
+
 import './style.css';
 import './aframe-app.js';
 
@@ -48,7 +86,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         if (typeof component.tick === 'function') {
                             try {
                                 if (name === 'wasd-controls') {
-                                    console.log(`WASD tick called: now=${now}, delta=${delta}, name=${name}`);
+                                    // console.log(`WASD tick called: now=${now}, delta=${delta}, name=${name}`);
                                 }
                                 component.tick(now, delta);
                             } catch (err) {
@@ -72,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
             // Debug log to verify rendering
-            console.log('Rendering with HalftonePass');
+            // console.log('Rendering with HalftonePass');
             composer.render();
         });
     }
@@ -80,6 +118,7 @@ window.addEventListener('DOMContentLoaded', () => {
     sceneEl.addEventListener('loaded', () => {
         setupComposer();
         hookRenderLoop();
+        // addTextPlaneToScene(sceneEl, 'Hello from Three.js!', { font: 'bold 48px sans-serif', color: '#222', bgColor: 'rgba(255,255,255,0.95)' });
     });
 
     // Re-hook render loop if A-Frame resets it

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "aframe": "^1.7.1",
+    "aframe-html-shader": "^0.2.0",
     "aframe-orbit-controls": "^1.3.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
