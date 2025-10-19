@@ -2,7 +2,7 @@
 AFRAME.registerComponent('threejs-text-plane', {
     schema: {
         text: { type: 'string', default: 'Hello from Three.js!' },
-        bgcolor: { type: 'string', default: 'rgba(255,255,255,0.95)' }
+        bgcolor: { type: 'string', default: 'transparent' }
     },
     init: function () {
         // Create canvas
@@ -11,42 +11,39 @@ AFRAME.registerComponent('threejs-text-plane', {
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = this.data.bgcolor;
-        ctx.fillRect(0, 0, width, height);
+        // No background fill for transparent text
         // Load Dogica font from public folder
         const self = this;
         const fontFace = new FontFace('Dogica', 'url(TTF/dogicapixel.ttf)');
-        fontFace.load().then(function (loadedFace) {
-            document.fonts.add(loadedFace);
-            ctx.clearRect(0, 0, width, height);
-            // ctx.fillStyle = self.data.bgcolor;
-            ctx.fillRect(0, 0, width, height);
-            ctx.font = '20px Dogica, monospace';
-            ctx.fillStyle = '#ff0000';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(self.data.text, width / 2, height / 2);
-            texture.needsUpdate = true;
-        });
+        // fontFace.load().then(function (loadedFace) {
+        //     document.fonts.add(loadedFace);
+        //     ctx.clearRect(0, 0, width, height);
+        //     ctx.font = '20px Dogica, monospace';
+        //     ctx.fillStyle = '#ff0000';
+        //     ctx.textAlign = 'center';
+        //     ctx.textBaseline = 'middle';
+        //     ctx.fillText(self.data.text, width / 2, height / 2);
+        //     texture.needsUpdate = true;
+        // });
         // Do not draw fallback text; only draw after Dogica loads
         // Measure text width and height (with padding)
-        ctx.font = '48px Dogica, monospace';
+        const font = '20px Dogica, monospace';
+        ctx.font = font;
         const metrics = ctx.measureText(this.data.text);
         const padding = 24;
         const textWidth = Math.ceil(metrics.width) + 2 * padding;
-        const textHeight = Math.ceil((metrics.actualBoundingBoxAscent || 48) + (metrics.actualBoundingBoxDescent || 12)) + 2 * padding;
+        const textHeight = Math.ceil((metrics.actualBoundingBoxAscent || 20) + (metrics.actualBoundingBoxDescent || 12)) + 2 * padding;
         // Set canvas size to fit text
         canvas.width = textWidth;
         canvas.height = textHeight;
         // Redraw background and text after resizing canvas
-        // ctx.fillStyle = this.data.bgcolor;
-        ctx.fillRect(0, 0, textWidth, textHeight);
+        // No background fill for transparent text
         // Draw a visible border for debugging
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 4;
         ctx.strokeRect(0, 0, textWidth, textHeight);
-        ctx.font = '48px Dogica, monospace';
-        ctx.fillStyle = this.data.color;
+        ctx.font = font;
+        ctx.fillStyle = 'red';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(this.data.text, textWidth / 2, textHeight / 2);
@@ -142,10 +139,10 @@ app.innerHTML = `
                                         <img id="dash-img" src="dash.png">
                                     </a-assets>
 
-                                    <a-plane position="0 2 -3" width="2" height=".04" src="#dash-img" material="transparent: true; side: double; repeat: 8 2"></a-plane>
+                                    <a-plane position="0 2 -3" width="0.5" height=".01" src="#dash-img" material="transparent: true; side: double; repeat: 8 2"></a-plane>
 
                                     <!-- Three.js text plane as A-Frame entity -->
-                                    <a-entity position="0 3 -4" threejs-text-plane="text: Hello from Three.js!; font: bold 48px sans-serif; color: #222; bgcolor: rgba(255,255,255,0.95)"></a-entity>
+                                    <a-entity position="1.5 2.5 -4" threejs-text-plane="text: Hello from Three.js!; font: bold 48px sans-serif; color: #222; bgcolor: rgba(255,255,255,0.95)"></a-entity>
                     
 
                 
