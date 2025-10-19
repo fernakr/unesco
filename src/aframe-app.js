@@ -15,7 +15,7 @@ AFRAME.registerComponent('threejs-text-plane', {
         ctx.fillRect(0, 0, width, height);
         // Load Dogica font from public folder
         const self = this;
-        const fontFace = new FontFace('Dogica', 'url(/TTF/dogicapixel.ttf)');
+        const fontFace = new FontFace('Dogica', 'url(TTF/dogicapixel.ttf)');
         fontFace.load().then(function (loadedFace) {
             document.fonts.add(loadedFace);
             ctx.clearRect(0, 0, width, height);
